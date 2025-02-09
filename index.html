@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор видео</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ff8c69;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10vh);
+            }
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        #video-container {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .heart-video {
+            width: 400px;
+            height: 280px;
+            border-radius: 50%;
+            clip-path: path("M 200 260 C -50 100 90 -50 200 50 C 310 -50 450 100 200 260 Z");
+            object-fit: cover;
+            display: block;
+        }
+
+        .text-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d60000;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .video-text {
+            font-size: 20px;
+            color: #800000;
+            margin-top: 10px;
+        }
+        .button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: #b22222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #c74242;
+        }
+        .click-text {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #d60000;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts"></div>
+
+    <div class="click-text">Drücke auf das Herz ❤️</div>
+
+    <div id="video-container">
+        <video id="main-video" class="heart-video" controls autoplay>
+            <source src="vorp_love.mp4" type="video/mp4">
+            
+        </video>
+        <p class="text-message">Wird Vorp dein Valentine? 💖</p>
+
+        <button class="button" onclick="changeVideo('vorp_chinchon.mp4', 'Alles liebe zum Valentinstag! Worp liebt dich! 💕')">Ja, natürlich</button>
+        <button class="button" onclick="changeVideo('vorp_bleh.mp4', 'Worp ist traurig. Worp ist unzufrieden. Worp ist ausgeflippt.')">Nein(</button>
+    </div>
+
+    <script>
+        function changeVideo(videoSrc, message) {
+            let container = document.getElementById("video-container");
+            container.innerHTML = `
+                <video class="heart-video" controls autoplay>
+                    <source src="${videoSrc}" type="video/mp4">
+                    
+                </video>
+                <p class="video-text">${message}</p>
+            `;
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector(".hearts");
+
+            for (let i = 0; i < 50; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s"; // Разная скорость падения
+                heart.style.fontSize = Math.random() * 20 + 10 + "px";
+                heart.style.opacity = Math.random() * 0.7 + 0.3;
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createHearts();
+    </script>
+
+</body>
+</html>
